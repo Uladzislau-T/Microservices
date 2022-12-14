@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
+using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService
 {
@@ -14,6 +15,7 @@ namespace PlatformService
                 opt.UseInMemoryDatabase("InMem"));
 
             builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
+            builder.Services.AddHttpClient<ICommandDataClient, HttpCommanDataClient>();
 
             builder.Services.AddControllers();
 
@@ -36,6 +38,8 @@ namespace PlatformService
             app.MapControllers();
 
             PrepDb.PrepPopulation(app);
+
+            Console.WriteLine($" --> CommandService Endpoint {builder.Configuration["CommandService"]}");
 
             app.Run();
         }
