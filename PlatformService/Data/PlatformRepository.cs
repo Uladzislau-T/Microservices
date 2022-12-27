@@ -10,7 +10,7 @@ namespace PlatformService.Data
         {
             _context= context;
         }
-        public void CreatPlatform(Platform platform)
+        public void CreatePlatform(Platform platform)
         {
             if (platform == null)
                 throw new ArgumentNullException();
