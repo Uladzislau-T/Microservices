@@ -1,6 +1,7 @@
 using CommandService.AsyncDataServices;
 using CommandService.Data;
 using CommandService.EventProcessing;
+using CommandService.SyncDataService.Grpc;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Input;
 
@@ -16,6 +17,8 @@ builder.Services.AddHostedService<MessageBusSubscriber>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IPlatformDataClient, PlatformDataClient>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,5 +37,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+PrepDb.PrepPopulation(app);
 
 app.Run();
